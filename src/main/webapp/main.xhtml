@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <meta charset="UTF-8"/>
+    <h:outputStylesheet name="css/style.css"/>
+    <h:outputScript name="js/script.js"/>
+    <h:outputScript name="js/graph.js"/>
+    <meta name="theme-color" content="#fafafa"/>
+</h:head>
+
+<h:body>
+    <header>
+        Валявина Валерия Константиновна P3223
+        <br/> Вариант: 285216
+    </header>
+    <h:form id="pointForm">
+        <div id="containers">
+            <div id="graph-container">
+                <svg id="mySVG" width="410" height="400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Ось X -->
+                    <line x1="30" y1="200" x2="395" y2="200" stroke="black" stroke-width="1"/>
+                    <polygon points="395,200 385,205 385,195" fill="black"/>
+
+                    <!-- Ось Y -->
+                    <line x1="200" y1="30" x2="200" y2="420" stroke="black" stroke-width="1"/>
+                    <polygon points="200,30 205,40 195,40" fill="black"/>
+
+                    <!-- Подписи для осей -->
+                    <text x="395" y="195" font-size="12" fill="black">X</text>
+                    <text x="205" y="30" font-size="12" fill="black">Y</text>
+
+                    <!-- Точки на графике по оси X -->
+                    <rect id="-X1" x="50" y="195" width="1" height="11" fill="black"/>
+                    <rect id="-X2" x="125" y="195" width="1" height="11" fill="black"/>
+                    <rect id="X1" x="285" y="195" width="1" height="11" fill="black"/>
+                    <rect id="X2" x="370" y="195" width="1" height="11" fill="black"/>
+
+                    <!-- Точки на графике по оси Y -->
+                    <rect id="Y1" x="195" y="50" width="11" height="1" fill="black"/>
+                    <rect id="Y2" x="195" y="125" width="11" height="1" fill="black"/>
+                    <rect id="-Y1" x="195" y="285" width="11" height="1" fill="black"/>
+                    <rect id="-Y2" x="195" y="370" width="11" height="1" fill="black"/>
+
+                    <!-- Подписи для точек X -->
+                    <text id="-R" x="45" y="210" font-size="10" fill="black">-R</text>
+                    <text id="-R/2" x="140" y="210" font-size="10" fill="black">-R/2</text>
+                    <text id="R/2" x="290" y="210" font-size="10" fill="black">R/2</text>
+                    <text id="R" x="385" y="210" font-size="10" fill="black">R</text>
+
+                    <!-- Подписи для точек Y -->
+                    <text id="R1" x="205" y="45" font-size="10" fill="black">R</text>
+                    <text id="R1/2" x="205" y="120" font-size="10" fill="black">R/2</text>
+                    <text id="-R1/2" x="205" y="275" font-size="10" fill="black">-R/2</text>
+                    <text id="-R1" x="205" y="366" font-size="10" fill="black">-R</text>
+
+                    <!-- Круг (Фигура_1) -->
+                    <path id="circle" d="M200.5 200 L200.5 120 A75 70 0 0 1 285 200 Z" fill="#867edc"/>
+
+                    <!-- Квадрат (Фигура_квадрат) -->
+                    <rect id="square" x="200.5" y="200.5" width="85" height="170" fill="#867edc"/>
+
+                    <!-- Треугольник (Фигура_треугольник) -->
+                    <polygon id="triangle" points="45,200 200,200 198,370" fill="#867edc"/>
+                </svg>
+            </div>
+            <div id="coordinates-container">
+                <!-- Элементы ввода координат (X, Y, R) -->
+                <h:outputLabel for="x">X:</h:outputLabel>
+                <h:inputText id="x" value="#{resultTable.x}" required="true"/>
+
+                <h:outputLabel for="y">Y:</h:outputLabel>
+                <h:inputText id="y" value="#{resultTable.y}" required="true"/>
+
+                <h:selectOneMenu id="r" value="#{resultTable.r}" required="true">
+                <h:outputLabel for="r">R:</h:outputLabel>
+                    <f:selectItem itemValue="1" itemLabel="1"/>
+                    <f:selectItem itemValue="2" itemLabel="2"/>
+                    <f:selectItem itemValue="3" itemLabel="3"/>
+                    <f:selectItem itemValue="4" itemLabel="4"/>
+                    <f:selectItem itemValue="5" itemLabel="5"/>
+                </h:selectOneMenu>
+
+                <!-- Кнопка для проверки координат -->
+                <p:remoteCommand name="sendRequest" update="resTable" action="#{beanCheck.validate}"/>
+                <button id="checkButton" type="button">Проверить</button>
+            </div>
+        </div>
+
+        <!-- Отображение результатов проверки координат -->
+        <h2>Результаты проверки координат:</h2>
+        <h:dataTable id="resTable">
+            <thead>
+            <tr>
+                <th>X</th>
+                <th>Y</th>
+                <th>R</th>
+                <th>Coords Status</th>
+                <th>Born Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Таблица с результатами -->
+            <ui:repeat value="#{beanCheck.resultTable}" var="point">
+                <tr>
+                    <td>#{point.x}</td>
+                    <td>#{point.y}</td>
+                    <td>#{point.r}</td>
+                    <td style="color: #{point.coordsStatus ? 'green' : 'red'}">#{point.coordsStatus}</td>
+                    <td>#{point.bornDate}</td>
+                </tr>
+            </ui:repeat>
+            </tbody>
+            <h:commandLink value="Вернуться на стартовую страницу" action="index.xhtml"/>
+        </h:dataTable>
+    </h:form>
+</h:body>
+</html>

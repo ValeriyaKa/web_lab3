@@ -1,0 +1,43 @@
+body {
+    font-family: fantasy;
+    color: black;
+    font-size: 1.6em;
+    padding: 0;
+    background-color: #b57edc;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+head{
+    font-family: fantasy;
+    text-align: center;
+    padding: 1%;
+    background-color: #a5dc7e;
+    font-size: 1em;
+    width: 93%;
+    height: 18%;
+    margin: 0 auto;
+    position: relative;
+    color: black;
+    border: 6px solid #867edc;
+}
+
+#clock {
+    font-family: Arial, sans-serif;
+    font-size: 2em;
+    text-align: center;
+    margin-top: 20px;
+    color: #fff;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    width: 200px;
+    margin: 0 auto;
+}
+
+#clock span {
+    display: inline-block;
+    margin: 0 5px;
+}
