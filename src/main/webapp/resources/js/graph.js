@@ -96,8 +96,8 @@ function drawPoints(x, y, isInside, svg) {
     const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
 
     let dotCoords = {
-        x: x / rValue * 125 + 150, // Измените значения координат в соответствии с вашей логикой
-        y: 150 - y / rValue * 125  // Измените значения координат в соответствии с вашей логикой
+        x: x / rValue * 125 + 150, 
+        y: 150 - y / rValue * 125 
     };
 
     dot.setAttribute("r", "5");
